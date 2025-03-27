@@ -1,0 +1,1 @@
+Currently drafting the UML diagram: https://lucid.app/lucidchart/8f440f20-138c-4be1-acba-d7460ae7af79/edit?viewport_loc=-1678%2C-1344%2C5447%2C2702%2C0_0&invitationId=inv_1df830d9-bbc8-48b9-8a81-5711cfb005d3
