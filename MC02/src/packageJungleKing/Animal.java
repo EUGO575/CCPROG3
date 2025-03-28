@@ -13,10 +13,12 @@ abstract class Animal {
     protected String owner;
     protected Tile position;
     protected int strength;
-
+    protected boolean isCaptured;
+    
     public Animal(String owner, Tile position) {
         this.owner = owner;
         this.position = position;
+        this.isCaptured = false;
     }
     
     public void setStrength(int strength) {
@@ -33,6 +35,10 @@ abstract class Animal {
 
     public int getStrength() {
         return this.strength;
+    }
+    
+    public boolean getCapturedStatus() {
+        return this.isCaptured;
     }
 
     // TO DO
