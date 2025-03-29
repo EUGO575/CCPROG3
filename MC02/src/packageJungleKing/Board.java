@@ -12,18 +12,13 @@ import java.util.*;
 public class Board {
 
     private Tile[][] tiles;
-
-    public Board(){
-        
-    }
     
-}
-
-// THIS IS MY ATTEMPT I KNOW IT IS VERY WRONG
-    // MAYBE U CAN USE THIS AS TEMPLATE
-    /*
     private String owner1;
     private String owner2;
+
+    private ArrayList<Animal> owner1List;
+    private ArrayList<Animal> owner2List;
+   
     
     private Elephant E1;
     private Lion L1;
@@ -98,13 +93,34 @@ public class Board {
         
         // Owner 2:
         this.E2 = new Elephant(owner2, tiles[6][6]);
-        this.L2 = new Lion(owner1, tiles[0][8]);
-        this.T2 = new Tiger(owner1, tiles[6][8]);
-        this.P2 = new Leopard(owner1, tiles[2][6]);
-        this.W2 = new Wolf(owner1, tiles[4][6]);
-        this.D2 = new Dog(owner1, tiles[1][7]);
-        this.C2 = new Cat(owner1, tiles[5][7]);
-        this.R2 = new Rat(owner1, tiles[0][6]);
-       
+        this.L2 = new Lion(owner2, tiles[0][8]);
+        this.T2 = new Tiger(owner2, tiles[6][8]);
+        this.P2 = new Leopard(owner2, tiles[2][6]);
+        this.W2 = new Wolf(owner2, tiles[4][6]);
+        this.D2 = new Dog(owner2, tiles[1][7]);
+        this.C2 = new Cat(owner2, tiles[5][7]);
+        this.R2 = new Rat(owner2, tiles[0][6]);
+
+
+        // Add to list of animals for each player.
+        owner1List.add(E1);
+        owner1List.add(L1);
+        owner1List.add(T1);
+        owner1List.add(P1);
+        owner1List.add(W1);
+        owner1List.add(D1);
+        owner1List.add(C1);
+        owner1List.add(R1);
+
+        owner2List.add(E2);
+        owner2List.add(L2);
+        owner2List.add(T2);
+        owner2List.add(P2);
+        owner2List.add(W2);
+        owner2List.add(D2);
+        owner2List.add(C2);
+        owner2List.add(R2);
     }
-    */
+}
+    
+    
