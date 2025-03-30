@@ -49,44 +49,38 @@ abstract class Animal {
         return this.isCaptured;
     }
 
-    // TO DO
-    public boolean isValidMove(Tile position) {
-
-        // Check if new coordinates are within bounds
-        if (position.getPosX() < 0 || position.getPosX() > 8 || position.getPosY() < 0 || position.getPosY() > 6) {
-            System.out.println("Invalid move! Out of bounds.");
+    public boolean isValidMove(Tile targetPosition) {
+        // Check bounds
+        if (targetPosition.getPosX() < 0 || targetPosition.getPosX() > 8 ||
+                targetPosition.getPosY() < 0 || targetPosition.getPosY() > 6) {
             return false;
         }
 
-        // Check if new coordinates is a swamp
-        if (position.getType() == "Swamp") {
-            System.out.println("Move not allowed! Try again.");
+        // Normal animals can't move to swamp tiles
+        if (targetPosition.getType().equals("Swamp")) {
             return false;
         }
 
-         // Validate the move (capture or regular movement)
-        if(position.getAnimal() != null) {
-            if (isValidCapture(position.getAnimal())) {
-                return true;
-            } else {
-                System.out.println("Move not allowed! Try again.");
-                return false;
-            }
-        } else { //If target position is adjacent
-            if (position.getPosX() == this.position.getPosX() - 1 && position.getPosY() == this.position.getPosY() ||
-                position.getPosX() == this.position.getPosX() + 1 && position.getPosY() == this.position.getPosY() ||
-                position.getPosX() == this.position.getPosX() && position.getPosY() == this.position.getPosY() + 1 ||
-                position.getPosX() == this.position.getPosX() && position.getPosY() == this.position.getPosY() - 1) {
-                return true;
-            }
-            else {
-                System.out.println("Move not allowed! Try again.");
-                return false;
-            }
+        // Check adjacent movement (1 tile in any direction)
+        int dx = Math.abs(targetPosition.getPosX() - this.position.getPosX());
+        int dy = Math.abs(targetPosition.getPosY() - this.position.getPosY());
+        if ((dx + dy) != 1) {
+            return false;
         }
+
+        // Check capture validity if target has animal
+        if (targetPosition.getAnimal() != null) {
+            return isValidCapture(targetPosition.getAnimal());
+        }
+
+        return true;
     }
 
     public boolean isValidCapture(Animal target) {
+        // Can't capture your own team
+        if (targetAnimal.getOwner().equals(this.owner)) {
+            return false;
+        }
         return this.strength >= target.getStrength();
     }
 }
