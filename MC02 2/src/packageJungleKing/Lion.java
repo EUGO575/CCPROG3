@@ -37,7 +37,7 @@ public class Lion extends Animal {
         }
     }
 
-    private boolean isValidLakeCrossing(Tile targetPosition) {
+    private boolean isValidLakeCrossing(Tile targetPosition, Board board) {
         // Determine direction of movement
         int dx = Integer.compare(targetPosition.getPosX(), this.position.getPosX());
         int dy = Integer.compare(targetPosition.getPosY(), this.position.getPosY());
