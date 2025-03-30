@@ -14,41 +14,51 @@ public class Rat extends Animal {
         super(owner, position);
         super.setStrength(1);
     }
-    
-    // TO DO
-    @Override
-    public boolean isValidMove(Tile position) {
 
-        // Check if new coordinates are within bounds
-        if (position.getPosX() < 0 || position.getPosX() > 8 || position.getPosY() < 0 || position.getPosY() > 6) {
-            System.out.println("Invalid move! Out of bounds.");
+    @Override
+    public boolean isValidMove(Tile targetPosition) {
+        // Check bounds
+        if (targetPosition.getPosX() < 0 || targetPosition.getPosX() > 8 ||
+                targetPosition.getPosY() < 0 || targetPosition.getPosY() > 6) {
             return false;
         }
 
-         // Validate the move (capture or regular movement)
-        if(position.getAnimal() != null) {
-            if (isValidCapture(position.getAnimal()) && this.position.getType() != "Swamp" || position.getAnimal().getStrength() == this.getStrength() && position.getType() == this.position.getType()) {
-                return true;
-            } else {
-                System.out.println("Move not allowed! Try again.");
-                return false;
-            }
-        } else { //If target position is adjacent
-            if (position.getPosX() == this.position.getPosX() - 1 && position.getPosY() == this.position.getPosY() ||
-                position.getPosX() == this.position.getPosX() + 1 && position.getPosY() == this.position.getPosY() ||
-                position.getPosX() == this.position.getPosX() && position.getPosY() == this.position.getPosY() + 1 ||
-                position.getPosX() == this.position.getPosX() && position.getPosY() == this.position.getPosY() - 1) {
-                return true;
-            }
-            else {
-                System.out.println("Move not allowed! Try again.");
-                return false;
-            }
+        // Rats can move 1 tile in any direction (land or water)
+        int dx = Math.abs(targetPosition.getPosX() - this.position.getPosX());
+        int dy = Math.abs(targetPosition.getPosY() - this.position.getPosY());
+        if ((dx + dy) != 1) {
+            return false;
         }
+
+        // Check capture validity if target has animal
+        if (targetPosition.getAnimal() != null) {
+            return isValidCapture(targetPosition.getAnimal());
+        }
+
+        // Rats can move to any adjacent tile (land or water)
+        return true;
     }
 
     @Override
     public boolean isValidCapture(Animal target) {
-        return target.getStrength() == 8;
+        // Can't capture own pieces
+        if (target.getOwner().equals(this.owner)) {
+            return false;
+        }
+
+        // Special case: Rat can always capture Elephant
+        if (target instanceof Elephant) {
+            return true;
+        }
+
+        // If in water, can only capture/be captured by other water rats
+        if (this.getPosition().getType().equals("Swamp")) {
+            return target instanceof Rat &&
+                    target.getPosition().getType().equals("Swamp") &&
+                    super.isValidCapture(target);
+        }
+
+        // On land: use normal capture rules
+        return super.isValidCapture(target);
     }
 }
