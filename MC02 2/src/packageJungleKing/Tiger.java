@@ -25,7 +25,7 @@ public class Tiger extends Animal {
             return false;
         }
 
-        /* FOR SWIMMING
+ 
         // Check if new coordinates is a swamp
         if (position.getType() == "Swamp") {
 
@@ -64,7 +64,7 @@ public class Tiger extends Animal {
             }
         }
 
-        */
+        
 
         
          // Validate the move (capture or regular movement)

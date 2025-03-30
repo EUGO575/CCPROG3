@@ -40,7 +40,7 @@ public class Board {
    
 
     public Board() {
-        tiles = new Tile[7][9];
+        this.tiles = new Tile[7][9];
         
 
         // 1. Fill the board with default land tiles.
@@ -120,6 +120,10 @@ public class Board {
         owner2List.add(D2);
         owner2List.add(C2);
         owner2List.add(R2);
+    }
+
+    public Tile[][] getBoard() {
+        return tiles;
     }
 }
     

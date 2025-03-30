@@ -12,6 +12,6 @@ public class Trap extends Tile {
 
     public Trap(int posX, int posY) {
         super(posX, posY);
-        super.setType("trap");
+        super.setType("Trap");
     }
 }

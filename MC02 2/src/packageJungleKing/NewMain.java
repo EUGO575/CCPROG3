@@ -15,6 +15,7 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // Testing!
+        /* 
         int x = 0;
         int y = 0;
         Land land = new Land(x, y);
@@ -28,6 +29,10 @@ public class NewMain {
         System.out.println(e.getPosition().getPosY());
         System.out.println(e.getStrength());
         System.out.println(e.getPosition().getType());
+        */
+
+        BoardView boardView = new BoardView();
+
     }
 
 }

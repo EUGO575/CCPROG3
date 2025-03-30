@@ -12,6 +12,6 @@ public class Swamp extends Tile {
 
     public Swamp(int posX, int posY) {
         super(posX, posY);
-        super.setType("swamp");
+        super.setType("Swamp");
     }
 }

@@ -12,6 +12,6 @@ public class Land extends Tile {
 
     public Land(int posX, int posY) {
         super(posX, posY);
-        super.setType("land");
+        super.setType("Land");
     }
 }
