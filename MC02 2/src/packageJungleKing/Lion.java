@@ -17,75 +17,68 @@ public class Lion extends Animal {
     
     // TO DO
     @Override
-    public boolean isValidMove (Tile position) {
-        
-        // Check if new coordinates are within bounds
-        if (position.getPosX() < 0 || position.getPosX() > 8 || position.getPosY() < 0 || position.getPosY() > 6) {
-            System.out.println("Invalid move! Out of bounds.");
+    public boolean isValidMove(Tile targetPosition) {
+        // Check bounds
+        if (targetPosition.getPosX() < 0 || targetPosition.getPosX() > 8 ||
+                targetPosition.getPosY() < 0 || targetPosition.getPosY() > 6) {
             return false;
         }
 
-        /* FOR SWIMMING
-        // Check if new coordinates is a swamp
-        if (position.getType() == "Swamp") {
-
-            Tile currentTile = position;
-            int i = 0;
-            String direction;
-            int numOfMoves = 0;
-            boolean hasRat = false;
-
-            // Get direction
-            if(this.position.getPosX() == position.getPosX()) // moving left or right
-            {
-                if(this.position.getPosY() > position.getPosY()){ // moving left
-                    direction = "Left";
-                }
-                else { // moving right
-                    direction = "Right";
-                }            
-            }
-            else {
-                if(this.position.getPosX() > position.getPosX()){ // moving up
-                    direction = "Up";
-                }
-                else { // moving down
-                    direction = "Down";
-                }  
-
-            }
-
-            while(currentTile.getType() == "Swamp") {
-                if(direction == "Left")
-                {
-                    currentTile = tiles[currentTile.getPosX][currentTile.getPosY];
-                }
-
-            }
+        // Check if moving across lake (Swamp)
+        if (targetPosition.getType().equals("Swamp")) {
+            return isValidLakeCrossing(targetPosition);
         }
 
-        */
-
-        
-         // Validate the move (capture or regular movement)
-       if(position.getAnimal() != null) {
-            if (isValidCapture(position.getAnimal())) {
-                return true;
-            } else {
-                System.out.println("Move not allowed! Try again.");
-                return false;
-            }
-        } else { //If target position is adjacent
-            if (position.getPosX() == this.position.getPosX() - 1 && position.getPosY() == this.position.getPosY() ||
-                position.getPosX() == this.position.getPosX() + 1 && position.getPosY() == this.position.getPosY() ||
-                position.getPosX() == this.position.getPosX() && position.getPosY() == this.position.getPosY() + 1 ||
-                position.getPosX() == this.position.getPosX() && position.getPosY() == this.position.getPosY() - 1) {
-                return true;
-            }
-            else {
-                System.out.println("Move not allowed! Try again.");
-                return false;
-            }
+        // Normal move validation
+        if (targetPosition.getAnimal() != null) {
+            return isValidCapture(targetPosition.getAnimal());
+        } else {
+            return isAdjacentPosition(targetPosition);
         }
+    }
+
+    private boolean isValidLakeCrossing(Tile targetPosition) {
+        // Determine direction of movement
+        int dx = Integer.compare(targetPosition.getPosX(), this.position.getPosX());
+        int dy = Integer.compare(targetPosition.getPosY(), this.position.getPosY());
+
+        // Must move in straight line (either horizontal or vertical)
+        if (dx != 0 && dy != 0) {
+            return false; // Diagonal not allowed
+        }
+
+        // Check all tiles along the path
+        int currentX = this.position.getPosX() + dx;
+        int currentY = this.position.getPosY() + dy;
+
+        while (currentX != targetPosition.getPosX() || currentY != targetPosition.getPosY()) {
+            Tile currentTile = board.getTiles()[currentY][currentX]; // Assuming board is accessible
+
+            // Must be continuous swamp tiles
+            if (!currentTile.getType().equals("Swamp")) {
+                return false;
+            }
+
+            // Check for blocking rat
+            if (currentTile.getAnimal() != null &&
+                    currentTile.getAnimal() instanceof Rat) {
+                return false;
+            }
+
+            currentX += dx;
+            currentY += dy;
+        }
+
+        // Final landing position must be valid
+        if (targetPosition.getAnimal() != null) {
+            return isValidCapture(targetPosition.getAnimal());
+        }
+        return true;
+    }
+
+    private boolean isAdjacentPosition(Tile targetPosition) {
+        int dx = Math.abs(targetPosition.getPosX() - this.position.getPosX());
+        int dy = Math.abs(targetPosition.getPosY() - this.position.getPosY());
+        return (dx == 1 && dy == 0) || (dx == 0 && dy == 1);
     }
 }
