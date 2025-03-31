@@ -25,18 +25,6 @@ abstract class Animal {
         this.board = board;
     }
 
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    public void setPosition(Tile position) {
-        this.position = position;
-    }
-
-    public void setCaptured(boolean isCaptured) {
-        this.isCaptured = isCaptured;
-    }
-
     public String getSpecies() {
         return this.species;
     }
@@ -55,6 +43,18 @@ abstract class Animal {
 
     public boolean getCapturedStatus() {
         return this.isCaptured;
+    }
+    
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public void setPosition(Tile position) {
+        this.position = position;
+    }
+
+    public void setCaptured(boolean isCaptured) {
+        this.isCaptured = isCaptured;
     }
 
     public boolean isValidMove(Tile targetPosition) {

@@ -20,14 +20,6 @@ abstract class Tile {
         this.posY = posY;
     }
     
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setAnimal(Animal animal) {
-        this.animal = animal;
-    }
-
     public int getPosX() {
         return this.posX;
     }
@@ -43,4 +35,13 @@ abstract class Tile {
     public Animal getAnimal() {
         return this.animal;
     }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
+    }
+
 }

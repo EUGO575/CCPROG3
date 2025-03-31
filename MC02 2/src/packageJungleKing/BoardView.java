@@ -68,16 +68,6 @@ public class BoardView extends JFrame {
         add(statusPanel, BorderLayout.SOUTH);
     }
 
-    public void placeIcon(Tile position, String imagePath) {
-        java.net.URL imgURL = getClass().getResource("/images/" + imagePath);
-        if (imgURL != null) {
-            ImageIcon icon = new ImageIcon(new ImageIcon(imgURL).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
-            boardButtons[position.getPosX()][position.getPosY()].setIcon(icon);
-        } else {
-            System.err.println("Image not found: " + imagePath);
-        }
-    }
-
     public JPanel getBoardPanel() {
         return boardPanel;
     }
@@ -90,10 +80,15 @@ public class BoardView extends JFrame {
         SwingUtilities.invokeLater(() -> captureLabel.setText(message));
     }
 
-
-
-
-    //for shuffle menu
+    public void placeIcon(Tile position, String imagePath) {
+        java.net.URL imgURL = getClass().getResource("/images/" + imagePath);
+        if (imgURL != null) {
+            ImageIcon icon = new ImageIcon(new ImageIcon(imgURL).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+            boardButtons[position.getPosX()][position.getPosY()].setIcon(icon);
+        } else {
+            System.err.println("Image not found: " + imagePath);
+        }
+    }
 
     public void showSelectionPopup(GameController controller) {
         ArrayList<String> shuffledAnimals = new ArrayList<>(Arrays.asList(animalTypes.clone()));
@@ -133,7 +128,4 @@ public class BoardView extends JFrame {
     private void determineFirstPlayer(GameController controller) {
         controller.declareFirstPlayer(player1Choice, player2Choice);
     }
-    
-
-    
 }
