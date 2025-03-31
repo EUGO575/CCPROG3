@@ -59,9 +59,10 @@ abstract class Animal {
 
     public boolean isValidMove(Tile targetPosition) {
         // First check if this animal is currently in a trap - if so, can't move at all
-        if (this.getPosition().getType().equals("Trap")) {
+        if (this.getPosition().getType().equals("Trap") && !((Trap)this.getPosition()).getOwner().equals(this.getOwner())) {
             return false;  // Completely immobilized in trap
         }
+        
 
         // Normal boundary checks
         if (targetPosition.getPosX() < 0 || targetPosition.getPosX() >= 7
@@ -98,7 +99,7 @@ abstract class Animal {
 
         // Special capture rules for traps:
         // If target is in a trap, can capture regardless of strength
-        if (target.getPosition().getType().equals("Trap")) {
+        if (target.getPosition().getType().equals("Trap") && !(target.getOwner().equals(this.owner))) {
             return true;
         }
 
