@@ -52,17 +52,17 @@ public class Board {
             }
         }
 
-        // 2. Set water tiles (using Swamp) in the two river areas.
+        // 2. Set water tiles (using Lake) in the two river areas.
         // Upper water block: rows 1-2, columns 3-5.
         for (int row = 1; row <= 2; row++) {
             for (int col = 3; col <= 5; col++) {
-                tiles[row][col] = new Swamp(row, col);
+                tiles[row][col] = new Lake(row, col);
             }
         }
         // Lower water block: rows 4-5, columns 3-5.
         for (int row = 4; row <= 5; row++) {
             for (int col = 3; col <= 5; col++) {
-                tiles[row][col] = new Swamp(row, col);
+                tiles[row][col] = new Lake(row, col);
             }
         }
 

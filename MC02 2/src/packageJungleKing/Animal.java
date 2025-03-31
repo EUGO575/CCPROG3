@@ -70,8 +70,8 @@ abstract class Animal {
             return false;
         }
 
-        // Normal animals can't move to swamp tiles
-        if (targetPosition.getType().equals("Swamp")) {
+        // Normal animals can't move to lake tiles
+        if (targetPosition.getType().equals("Lake")) {
             return false;
         }
 

@@ -41,8 +41,8 @@ public class GameController {
                     char owner = animal.getOwner().charAt(animal.getOwner().length() - 1);
                     String imagePath = animal.getSpecies() + owner + ".png";
                     boardView.placeIcon(tile, imagePath);
-                } else if ("Swamp".equals(tile.getType())) {
-                    boardView.placeIcon(tile, "Swamp.png");
+                } else if ("Lake".equals(tile.getType())) {
+                    boardView.placeIcon(tile, "Lake.png");
                 } else if ("Trap".equals(tile.getType())) {
                     boardView.placeIcon(tile, "Trap.png");
                 } else if ("Base".equals(tile.getType())) {
