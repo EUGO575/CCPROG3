@@ -9,6 +9,7 @@ package packageJungleKing;
  * @author peter parker
  */
 public class Tiger extends Animal {
+
     public Tiger(String owner, Tile position, Board board) {
         super("Lion", owner, position, board);
         super.setStrength(6);
@@ -16,14 +17,21 @@ public class Tiger extends Animal {
 
     @Override
     public boolean isValidMove(Tile targetPosition) {
+        // First check if this animal is currently in a trap - if so, can't move at all
+        if (this.getPosition().getType().equals("Trap")) {
+            return false;  // Completely immobilized in trap
+        }
+        
         // Boundary check (7 rows x 9 columns)
-        if (targetPosition.getPosX() < 0 || targetPosition.getPosX() >= 7 || 
-            targetPosition.getPosY() < 0 || targetPosition.getPosY() >= 9) {
+        if (targetPosition.getPosX() < 0 || targetPosition.getPosX() >= 7
+                || targetPosition.getPosY() < 0 || targetPosition.getPosY() >= 9) {
             return false;
         }
 
         // Can't move to swamp tiles
-        if (targetPosition.getType().equals("Swamp")) return false;
+        if (targetPosition.getType().equals("Swamp")) {
+            return false;
+        }
 
         int dx = targetPosition.getPosX() - this.position.getPosX();
         int dy = targetPosition.getPosY() - this.position.getPosY();
@@ -36,11 +44,13 @@ public class Tiger extends Animal {
         }
 
         // Check lake crossing (must move in straight line over swamp)
-        if ((absDx > 0 && dy != 0) || (absDy > 0 && dx != 0)) return false;
+        if ((absDx > 0 && dy != 0) || (absDy > 0 && dx != 0)) {
+            return false;
+        }
 
         int stepX = Integer.signum(dx);
         int stepY = Integer.signum(dy);
-        
+
         // Check intermediate swamp tiles
         int currentX = position.getPosX() + stepX;
         int currentY = position.getPosY() + stepY;
@@ -48,14 +58,16 @@ public class Tiger extends Animal {
 
         while (currentX != targetPosition.getPosX() || currentY != targetPosition.getPosY()) {
             Tile currentTile = board.getTiles()[currentX][currentY];
-            
+
             // Must be continuous swamp tiles
-            if (!currentTile.getType().equals("Swamp")) return false;
+            if (!currentTile.getType().equals("Swamp")) {
+                return false;
+            }
             foundSwamp = true;
 
             // Check for blocking rat
-            if (currentTile.getAnimal() != null && 
-                currentTile.getAnimal().getSpecies().equals("Rat")) {
+            if (currentTile.getAnimal() != null
+                    && currentTile.getAnimal().getSpecies().equals("Rat")) {
                 return false;
             }
 
