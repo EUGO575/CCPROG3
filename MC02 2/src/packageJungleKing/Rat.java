@@ -17,9 +17,14 @@ public class Rat extends Animal {
 
     @Override
     public boolean isValidMove(Tile targetPosition) {
+        // First check if this animal is currently in a trap - if so, can't move at all
+        if (this.getPosition().getType().equals("Trap")) {
+            return false;  // Completely immobilized in trap
+        }
+
         // Check bounds
-        if (targetPosition.getPosX() < 0 || targetPosition.getPosX() > 8 ||
-                targetPosition.getPosY() < 0 || targetPosition.getPosY() > 6) {
+        if (targetPosition.getPosX() < 0 || targetPosition.getPosX() > 8
+                || targetPosition.getPosY() < 0 || targetPosition.getPosY() > 6) {
             return false;
         }
 
@@ -53,9 +58,9 @@ public class Rat extends Animal {
 
         // If in water, can only capture/be captured by other water rats
         if (this.getPosition().getType().equals("Swamp")) {
-            return target instanceof Rat &&
-                    target.getPosition().getType().equals("Swamp") &&
-                    super.isValidCapture(target);
+            return target instanceof Rat
+                    && target.getPosition().getType().equals("Swamp")
+                    && super.isValidCapture(target);
         }
 
         // On land: use normal capture rules
