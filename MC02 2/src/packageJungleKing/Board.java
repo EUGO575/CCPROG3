@@ -68,14 +68,14 @@ public class Board {
 
         // 3. Set traps using the Trap subclass.
         // Left side traps at (2,0), (4,0) and (3,1)
-        tiles[2][0] = new Trap(2, 0);
-        tiles[4][0] = new Trap(4, 0);
-        tiles[3][1] = new Trap(3, 1);
+        tiles[2][0] = new Trap(2, 0, owner1);
+        tiles[4][0] = new Trap(4, 0, owner1);
+        tiles[3][1] = new Trap(3, 1, owner1);
 
         // Right side traps at (2,8), (4,8) and (3,7)
-        tiles[2][8] = new Trap(2, 8);
-        tiles[4][8] = new Trap(4, 8);
-        tiles[3][7] = new Trap(3, 7);
+        tiles[2][8] = new Trap(2, 8, owner2);
+        tiles[4][8] = new Trap(4, 8, owner2);
+        tiles[3][7] = new Trap(3, 7, owner2);
 
         // 4. Set bases using the Base subclass.
         // Left base at (3,0) and right base at (3,8).
