@@ -10,8 +10,15 @@ package packageJungleKing;
  */
 public class Trap extends Tile {
 
-    public Trap(int posX, int posY) {
+    private String owner;
+
+    public Trap(int posX, int posY, String owner) {
         super(posX, posY);
+        this.owner = owner;
         super.setType("Trap");
+    }
+    
+    public String getOwner() {
+        return this.owner;
     }
 }
