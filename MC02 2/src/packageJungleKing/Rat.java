@@ -50,6 +50,12 @@ public class Rat extends Animal {
         if (target.getOwner().equals(this.owner)) {
             return false;
         }
+        
+        // Special capture rules for traps:
+        // If target is in a trap, can capture regardless of strength
+        if (target.getPosition().getType().equals("Trap") && !(target.getOwner().equals(this.owner))) {
+            return true;
+        }
 
         // Special case: Rat can always capture Elephant
         if (target instanceof Elephant) {
