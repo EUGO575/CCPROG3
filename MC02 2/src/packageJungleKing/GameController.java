@@ -1,7 +1,8 @@
 package packageJungleKing;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.*;
 import javax.swing.*;
 
@@ -20,9 +21,15 @@ public class GameController {
         this.gameModel = gameModel;
         this.boardView = boardView;
         this.playerTurn = 0;
+        
+        // Show animal selection popup before starting the game
+        boardView.showSelectionPopup(this);
+        
+        // Continue setting up the game
         updateGUI();
         clickTile();
     }
+    
 
     public void updateGUI() {
         for (int i = 0; i < 7; i++) {
@@ -50,24 +57,23 @@ public class GameController {
     public void clickTile() {
         actionListener = e -> {
             String command = ((JButton) e.getSource()).getActionCommand();
-            // Handle invalid action commands
             if (command == null || command.isEmpty()) {
                 System.err.println("Invalid action command!");
                 return;
             }
-
+    
             String[] parts = command.split(",");
             if (parts.length != 2) {
                 System.err.println("Invalid command format!");
                 return;
             }
-
+    
             try {
                 int row = Integer.parseInt(parts[0]);
                 int col = Integer.parseInt(parts[1]);
                 Tile clickedTile = board.getTiles()[row][col];
                 Animal clickedAnimal = clickedTile.getAnimal();
-
+    
                 if (!isPieceSelected) {
                     if (clickedAnimal != null && clickedAnimal.getOwner().equals("owner" + (playerTurn + 1))) {
                         selectedAnimal = clickedAnimal;
@@ -77,14 +83,32 @@ public class GameController {
                 } else {
                     if (selectedAnimal.isValidMove(clickedTile)) {
                         if (clickedTile.getAnimal() != null) {
+                            Animal captured = clickedTile.getAnimal();
                             gameModel.capture(selectedAnimal, clickedTile);
+                    
+                            // Display capture message
+                            boardView.setCaptureMessage(selectedAnimal.getSpecies() + " captured " + captured.getSpecies() + "!");
+                        } else {
+                            boardView.setCaptureMessage(""); // Clear message if no capture
                         }
+                    
                         Tile sourceTile = selectedAnimal.getPosition();
                         gameModel.movePiece(selectedAnimal, clickedTile);
                         sourceTile.setAnimal(null);
                         updateGUI();
+                    
+                        // Check if the moved animal is in the opponent’s base
+                        if ((playerTurn == 0 && clickedTile.getPosX() == 3 && clickedTile.getPosY() == 8) || 
+                        (playerTurn == 1 && clickedTile.getPosX() == 3 && clickedTile.getPosY() == 0)) {
+                        boardView.setStatusMessage("Player " + (playerTurn + 1) + " wins!");
+                        disableBoard();
+                        } else {
+                        // Switch turn and update status
                         playerTurn = (playerTurn + 1) % 2;
+                        boardView.setStatusMessage("Player " + (playerTurn + 1) + "'s turn!");
+                        }
                     }
+                    
                     isPieceSelected = false;
                     selectedAnimal = null;
                     selectedTile = null;
@@ -93,7 +117,7 @@ public class GameController {
                 System.err.println("Error parsing tile position: " + ex.getMessage());
             }
         };
-
+    
         JPanel boardPanel = boardView.getBoardPanel();
         for (Component comp : boardPanel.getComponents()) {
             if (comp instanceof JButton) {
@@ -101,4 +125,29 @@ public class GameController {
             }
         }
     }
+    
+    private void disableBoard() {
+        JPanel boardPanel = boardView.getBoardPanel();
+        for (Component comp : boardPanel.getComponents()) {
+            if (comp instanceof JButton) {
+                ((JButton) comp).setEnabled(false);
+            }
+        }
+    }
+
+    public String compareAnimalStrength(String animal1, String animal2) {
+        ArrayList<String> strengthOrder = new ArrayList<>(Arrays.asList("Rat", "Cat", "Wolf", "Dog", "Leopard", "Tiger", "Lion", "Elephant"));
+
+        int index1 = strengthOrder.indexOf(animal1);
+        int index2 = strengthOrder.indexOf(animal2);
+    
+        return (index1 > index2) ? animal1 : animal2;
+    }
+    
+    
+    public void declareFirstPlayer(String chosenAnimal1, String chosenAnimal2) {
+        String firstPlayerAnimal = compareAnimalStrength(chosenAnimal1, chosenAnimal2);
+
+        boardView.setStatusMessage("1st person picked " + chosenAnimal1 + " and 2nd person picked " + chosenAnimal2 + ". Player who picked " + firstPlayerAnimal + " is Player 1!");
+    }        
 }
