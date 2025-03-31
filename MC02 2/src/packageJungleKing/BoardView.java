@@ -47,7 +47,21 @@ public class BoardView extends JFrame {
 
     // Method to place an animal piece with an image
     public void placeIcon(Tile position, String imagePath) {
-        ImageIcon icon = new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
-        boardButtons[position.getPosX()][position.getPosY()].setIcon(icon);
+        java.net.URL imgURL = getClass().getResource("/images/" + imagePath);
+        if (imgURL != null) {
+            ImageIcon icon = new ImageIcon(new ImageIcon(imgURL).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+            boardButtons[position.getPosX()][position.getPosY()].setIcon(icon);
+        } else {
+            System.err.println("Image not found: " + imagePath);
+        }
     }
+    
+
+    public String getImageName(Animal animal) {
+        char owner = animal.getOwner().charAt(animal.getOwner().length() - 1); // 1 or 2
+        String imagePath = "" + animal.getSpecies() + owner + ".png";
+        return imagePath;
+    }
+    
+    
 }

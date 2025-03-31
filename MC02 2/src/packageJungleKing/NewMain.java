@@ -31,8 +31,10 @@ public class NewMain {
         System.out.println(e.getPosition().getType());
         */
 
+        Board board = new Board();
         BoardView boardView = new BoardView();
-
+        GameModel gameModel = new GameModel();
+        GameController gameController = new GameController(board, gameModel, boardView);
     }
 
 }

@@ -11,7 +11,7 @@ package packageJungleKing;
 public class Leopard extends Animal {
 
     public Leopard(String owner, Tile position) {
-        super(owner, position);
+        super("Leopard", owner, position);
         super.setStrength(5);
     }
 }

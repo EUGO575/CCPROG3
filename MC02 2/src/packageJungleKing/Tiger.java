@@ -11,7 +11,7 @@ package packageJungleKing;
 public class Tiger extends Animal {
 
     public Tiger(String owner, Tile position) {
-        super(owner, position);
+        super("Tiger", owner, position);
         super.setStrength(6);
     }
 
@@ -25,7 +25,7 @@ public class Tiger extends Animal {
 
         // Check if moving across lake (Swamp)
         if (targetPosition.getType().equals("Swamp")) {
-            return isValidLakeCrossing(targetPosition);
+            return isValidLakeCrossing(targetPosition, board);
         }
 
         // Normal move validation
@@ -36,7 +36,7 @@ public class Tiger extends Animal {
         }
     }
 
-    private boolean isValidLakeCrossing(Tile targetPosition, Board board) {
+    private boolean isValidLakeCrossing(Tile targetPosition) {
         // Determine direction of movement
         int dx = Integer.compare(targetPosition.getPosX(), this.position.getPosX());
         int dy = Integer.compare(targetPosition.getPosY(), this.position.getPosY());

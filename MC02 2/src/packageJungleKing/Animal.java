@@ -10,12 +10,14 @@ package packageJungleKing;
  */
 abstract class Animal {
 
+    protected String species;
     protected String owner;
     protected Tile position;
     protected int strength;
     protected boolean isCaptured;
     
-    public Animal(String owner, Tile position) {
+    public Animal(String species, String owner, Tile position) {
+        this.species = species;
         this.owner = owner;
         this.position = position;
         this.isCaptured = false;
@@ -31,6 +33,10 @@ abstract class Animal {
 
     public void setCaptured(boolean isCaptured) {
         this.isCaptured = isCaptured;
+    }
+
+    public String getSpecies() {
+        return this.species;
     }
     
     public String getOwner() {
@@ -78,7 +84,7 @@ abstract class Animal {
 
     public boolean isValidCapture(Animal target) {
         // Can't capture your own team
-        if (targetAnimal.getOwner().equals(this.owner)) {
+        if (target.getOwner().equals(this.owner)) {
             return false;
         }
         return this.strength >= target.getStrength();

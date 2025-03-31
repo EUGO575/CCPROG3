@@ -11,7 +11,7 @@ package packageJungleKing;
 public class Lion extends Animal {
 
     public Lion(String owner, Tile position) {
-        super(owner, position);
+        super("Lion", owner, position);
         super.setStrength(7);
     }
     
@@ -37,7 +37,7 @@ public class Lion extends Animal {
         }
     }
 
-    private boolean isValidLakeCrossing(Tile targetPosition, Board board) {
+    private boolean isValidLakeCrossing(Tile targetPosition) {
         // Determine direction of movement
         int dx = Integer.compare(targetPosition.getPosX(), this.position.getPosX());
         int dy = Integer.compare(targetPosition.getPosY(), this.position.getPosY());

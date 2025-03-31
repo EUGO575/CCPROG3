@@ -18,7 +18,6 @@ public class Board {
 
     private ArrayList<Animal> owner1List;
     private ArrayList<Animal> owner2List;
-   
     
     private Elephant E1;
     private Lion L1;
@@ -41,7 +40,10 @@ public class Board {
 
     public Board() {
         this.tiles = new Tile[7][9];
-        
+        this.owner1 = "owner1";
+        this.owner2 = "owner2";
+        this.owner1List = new ArrayList<>();
+        this.owner2List = new ArrayList<>();
 
         // 1. Fill the board with default land tiles.
         for (int row = 0; row < 7; row++) {
@@ -101,6 +103,57 @@ public class Board {
         this.C2 = new Cat(owner2, tiles[5][7]);
         this.R2 = new Rat(owner2, tiles[0][6]);
 
+        // 5. Set animals in their respective positions.
+        // Owner 1:
+        this.E1 = new Elephant(owner1, tiles[0][2]);
+        tiles[0][2].setAnimal(E1);  // Set the animal inside the tile
+
+        this.L1 = new Lion(owner1, tiles[6][0]);
+        tiles[6][0].setAnimal(L1);
+
+        this.T1 = new Tiger(owner1, tiles[0][0]);
+        tiles[0][0].setAnimal(T1);
+
+        this.P1 = new Leopard(owner1, tiles[4][2]);
+        tiles[4][2].setAnimal(P1);
+
+        this.W1 = new Wolf(owner1, tiles[2][2]);
+        tiles[2][2].setAnimal(W1);
+
+        this.D1 = new Dog(owner1, tiles[5][1]);
+        tiles[5][1].setAnimal(D1);
+
+        this.C1 = new Cat(owner1, tiles[1][1]);
+        tiles[1][1].setAnimal(C1);
+
+        this.R1 = new Rat(owner1, tiles[6][2]);
+        tiles[6][2].setAnimal(R1);
+
+        // Owner 2:
+        this.E2 = new Elephant(owner2, tiles[6][6]);
+        tiles[6][6].setAnimal(E2);
+
+        this.L2 = new Lion(owner2, tiles[0][8]);
+        tiles[0][8].setAnimal(L2);
+
+        this.T2 = new Tiger(owner2, tiles[6][8]);
+        tiles[6][8].setAnimal(T2);
+
+        this.P2 = new Leopard(owner2, tiles[2][6]);
+        tiles[2][6].setAnimal(P2);
+
+        this.W2 = new Wolf(owner2, tiles[4][6]);
+        tiles[4][6].setAnimal(W2);
+
+        this.D2 = new Dog(owner2, tiles[1][7]);
+        tiles[1][7].setAnimal(D2);
+
+        this.C2 = new Cat(owner2, tiles[5][7]);
+        tiles[5][7].setAnimal(C2);
+
+        this.R2 = new Rat(owner2, tiles[0][6]);
+        tiles[0][6].setAnimal(R2);
+
 
         // Add to list of animals for each player.
         owner1List.add(E1);
@@ -122,7 +175,7 @@ public class Board {
         owner2List.add(R2);
     }
 
-    public Tile[][] getBoard() {
+    public Tile[][] getTiles() {
         return tiles;
     }
 }

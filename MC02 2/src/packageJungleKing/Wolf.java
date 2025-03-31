@@ -11,7 +11,7 @@ package packageJungleKing;
 public class Wolf extends Animal {
 
     public Wolf(String owner, Tile position) {
-        super(owner, position);
+        super("Wolf", owner, position);
         super.setStrength(4);
     }
 }

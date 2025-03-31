@@ -1,13 +1,8 @@
 package packageJungleKing;
 
-import java.util.Scanner;
-
 public class GameModel {
 
-    private Board board;
-
-    public GameModel(Board board) {
-        this.board = board;
+    public GameModel() {
     }
 
     public void movePiece(Animal animal, Tile target) {
