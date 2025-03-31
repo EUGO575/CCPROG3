@@ -18,7 +18,7 @@ public class Lion extends Animal {
     @Override
     public boolean isValidMove(Tile targetPosition) {
         // First check if this animal is currently in a trap - if so, can't move at all
-        if (this.getPosition().getType().equals("Trap")) {
+        if (this.getPosition().getType().equals("Trap") && !((Trap) this.getPosition()).getOwner().equals(this.getOwner())) {
             return false;  // Completely immobilized in trap
         }
 
